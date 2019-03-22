@@ -10,9 +10,9 @@ enum Movement{
 #[derive(Debug)]
 struct Quintuple{
     initial_state: u16,
-    read: Option<i32>,
+    read: Option<char>,
     final_state: u16,
-    write: Option<i32>,
+    write: Option<char>,
     movement: Movement
 }
 
@@ -41,9 +41,9 @@ fn main() {
         let quintuple = Quintuple{
             initial_state: rule_pieces[0].parse::<u16>().unwrap(),
             // If we're reading a null symbol, then don't try to parse it
-            read: if rule_pieces[1] == info[0]{None}else{Some(rule_pieces[1].parse::<i32>().unwrap())},
+            read: if rule_pieces[1] == info[0]{None}else{Some(rule_pieces[1].parse::<char>().unwrap())},
             final_state: rule_pieces[2].parse::<u16>().unwrap(),
-            write: if rule_pieces[3] == info[0]{None}else{Some(rule_pieces[3].parse::<i32>().unwrap())},
+            write: if rule_pieces[3] == info[0]{None}else{Some(rule_pieces[3].parse::<char>().unwrap())},
             movement: if rule_pieces[4] == info[1]{Movement::Left}else{Movement::Right}
         };
         // Add to the list of rules
@@ -56,8 +56,8 @@ fn main() {
     file_t.read_to_string(&mut tape_raw).unwrap();
     tape_raw = tape_raw.replace("\n","");//
     let mut tape = tape_raw.split("|").collect::<Vec<&str>>().iter().map(
-        |&x| if x == info[0]{None}else{Some(x.parse::<i32>().unwrap())}
-    ).collect::<Vec<Option<i32>>>();
+        |&x| if x == info[0]{None}else{Some(x.parse::<char>().unwrap())}
+    ).collect::<Vec<Option<char>>>();
     let mut i = 0;
     let mut state = 0;
     let exit_state = info[3].parse::<u16>().unwrap();
